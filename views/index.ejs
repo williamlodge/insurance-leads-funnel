@@ -1,0 +1,177 @@
+<%- include('partials/header.ejs') %>
+
+<!-- ======================= HERO + 4-STEP QUESTIONNAIRE ======================= -->
+<section class="hero">
+  <h1>Launch your business with a clear plan.</h1>
+  <p class="hero-sub">Answer 4 quick questions and get a personalized startup checklist for your LLC — plus the option to request business insurance quotes from licensed providers.</p>
+</section>
+
+<section class="card funnel" id="funnel">
+  <div class="progress" aria-hidden="true">
+    <div class="progress-bar" id="progressBar" style="width:25%"></div>
+  </div>
+  <p class="step-label" id="stepLabel">Step 1 of 4</p>
+
+  <form id="quizForm" novalidate>
+    <!-- honeypot (anti-spam, hidden from humans) -->
+    <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+    <!-- STEP 1: Business stage -->
+    <fieldset class="step" data-step="1">
+      <legend>Where are you in your business journey?</legend>
+      <div class="options" data-name="stage">
+        <button type="button" class="option" data-value="Just exploring">Just exploring an idea</button>
+        <button type="button" class="option" data-value="Ready to form LLC">Ready to form my LLC</button>
+        <button type="button" class="option" data-value="LLC already formed">LLC already formed</button>
+        <button type="button" class="option" data-value="Operating without LLC">Operating without an LLC</button>
+      </div>
+    </fieldset>
+
+    <!-- STEP 2: Industry & size -->
+    <fieldset class="step hidden" data-step="2">
+      <legend>What kind of business is it?</legend>
+      <div class="options" data-name="industry">
+        <button type="button" class="option" data-value="Professional services">Professional services / consulting</button>
+        <button type="button" class="option" data-value="E-commerce / retail">E-commerce / retail</button>
+        <button type="button" class="option" data-value="Food / hospitality">Food / hospitality</button>
+        <button type="button" class="option" data-value="Construction / trades">Construction / trades</button>
+        <button type="button" class="option" data-value="Health / wellness">Health / wellness</button>
+        <button type="button" class="option" data-value="Tech / online">Tech / online services</button>
+        <button type="button" class="option" data-value="Other">Other</button>
+      </div>
+      <div class="two-col">
+        <label>Number of employees
+          <select name="employees">
+            <option value="Just me">Just me</option>
+            <option value="2-5">2–5</option>
+            <option value="6-20">6–20</option>
+            <option value="20+">20+</option>
+          </select>
+        </label>
+        <label>Expected annual revenue
+          <select name="revenue">
+            <option value="Pre-revenue">Pre-revenue</option>
+            <option value="Under $100k">Under $100k</option>
+            <option value="$100k–$500k">$100k–$500k</option>
+            <option value="$500k+">$500k+</option>
+          </select>
+        </label>
+      </div>
+    </fieldset>
+
+    <!-- STEP 3: State & timeline -->
+    <fieldset class="step hidden" data-step="3">
+      <legend>Where and when?</legend>
+      <div class="two-col">
+        <label>State where you'll form / operate
+          <select name="state">
+            <% states.forEach(function(s){ %><option value="<%= s %>"><%= s %></option><% }) %>
+          </select>
+        </label>
+        <label>When do you plan to launch?
+          <select name="timeline">
+            <option value="ASAP">As soon as possible</option>
+            <option value="1–3 months">Within 1–3 months</option>
+            <option value="3–6 months">3–6 months</option>
+            <option value="6+ months">6+ months / not sure</option>
+          </select>
+        </label>
+      </div>
+    </fieldset>
+
+    <!-- STEP 4: Insurance interests -->
+    <fieldset class="step hidden" data-step="4">
+      <legend>Which coverages are you curious about? <span class="muted">(optional — select any)</span></legend>
+      <div class="chips" data-name="insurance_interests">
+        <button type="button" class="chip" data-value="General liability">General liability</button>
+        <button type="button" class="chip" data-value="Professional liability (E&O)">Professional liability (E&amp;O)</button>
+        <button type="button" class="chip" data-value="Workers' compensation">Workers' compensation</button>
+        <button type="button" class="chip" data-value="Commercial property">Commercial property</button>
+        <button type="button" class="chip" data-value="Cyber liability">Cyber liability</button>
+        <button type="button" class="chip" data-value="Business owner's policy (BOP)">Business owner's policy (BOP)</button>
+        <button type="button" class="chip" data-value="Commercial auto">Commercial auto</button>
+      </div>
+      <p class="fine-print">Selecting coverages here is only used to personalize your checklist. It is <em>not</em> a request for quotes and does not share your contact info with anyone.</p>
+    </fieldset>
+
+    <div class="nav-buttons">
+      <button type="button" class="btn btn-ghost hidden" id="backBtn">Back</button>
+      <button type="button" class="btn btn-primary" id="nextBtn" disabled>Continue</button>
+    </div>
+    <p class="form-error" id="quizError" role="alert"></p>
+  </form>
+</section>
+
+<!-- ======================= PERSONALIZED CHECKLIST ======================= -->
+<section class="card checklist hidden" id="checklistSection">
+  <h2>Your personalized startup checklist</h2>
+  <p class="muted" id="checklistIntro"></p>
+  <ul class="checklist-items" id="checklistItems"></ul>
+  <p class="fine-print">This checklist is general educational information, not legal or tax advice. Requirements vary by state, county, and industry — verify with your state's Secretary of State office and a licensed professional.</p>
+  <div class="nav-buttons">
+    <button type="button" class="btn btn-ghost" id="restartBtn">Start over</button>
+    <a class="btn btn-primary" href="#leadSection" id="toLeadBtn">Get insurance quotes (optional)</a>
+  </div>
+</section>
+
+<!-- ======================= CONSENT-BASED INSURANCE LEAD FORM ======================= -->
+<section class="card lead" id="leadSection">
+  <h2>Request business insurance quotes</h2>
+  <p>Want a licensed insurance professional to contact you with quotes? Fill out the form below. <strong>This step is completely optional</strong> and separate from your checklist.</p>
+
+  <form id="leadForm" novalidate>
+    <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <input type="hidden" name="session_id" id="leadSessionId" value="">
+
+    <div class="two-col">
+      <label>First name * <input type="text" name="first_name" required autocomplete="given-name"></label>
+      <label>Last name <input type="text" name="last_name" autocomplete="family-name"></label>
+    </div>
+    <div class="two-col">
+      <label>Email * <input type="email" name="email" required autocomplete="email"></label>
+      <label>Phone <input type="tel" name="phone" autocomplete="tel" inputmode="tel"></label>
+    </div>
+    <div class="two-col">
+      <label>Business name <input type="text" name="business_name" autocomplete="organization"></label>
+      <label>State
+        <select name="state">
+          <% states.forEach(function(s){ %><option value="<%= s %>"><%= s %></option><% }) %>
+        </select>
+      </label>
+    </div>
+
+    <fieldset class="coverage-fieldset">
+      <legend>Coverage you're interested in</legend>
+      <div class="chips" data-name="coverage_types">
+        <button type="button" class="chip" data-value="General liability">General liability</button>
+        <button type="button" class="chip" data-value="Professional liability (E&O)">Professional liability (E&amp;O)</button>
+        <button type="button" class="chip" data-value="Workers' compensation">Workers' compensation</button>
+        <button type="button" class="chip" data-value="Commercial property">Commercial property</button>
+        <button type="button" class="chip" data-value="Cyber liability">Cyber liability</button>
+        <button type="button" class="chip" data-value="Business owner's policy (BOP)">Business owner's policy (BOP)</button>
+        <button type="button" class="chip" data-value="Commercial auto">Commercial auto</button>
+      </div>
+    </fieldset>
+
+    <label>Anything else we should know? <textarea name="notes" rows="3" maxlength="2000"></textarea></label>
+
+    <div class="consent-box">
+      <label class="consent">
+        <input type="checkbox" name="consent_contact" required>
+        <span>I consent to be contacted by <%= brand %> and/or licensed insurance partners about business insurance quotes at the email and phone number I provided.</span>
+      </label>
+      <label class="consent">
+        <input type="checkbox" name="consent_tcpa" required>
+        <span>By checking this box, I provide my express written consent to receive calls and texts (including by automated means) and emails at the contact information provided. Consent is not a condition of purchase. Message/data rates may apply. I can opt out at any time.</span>
+      </label>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-block" id="leadSubmit">Request my quotes</button>
+    <p class="form-error" id="leadError" role="alert"></p>
+    <p class="form-success hidden" id="leadSuccess" role="status">Thanks! Your request was submitted. A licensed insurance professional will reach out using the contact info you provided.</p>
+    <p class="fine-print">We are not an insurance company or licensed producer. Quotes and coverage are provided only by licensed insurers/producers; eligibility and pricing are determined solely by them. Submitting this form does not create coverage.</p>
+  </form>
+</section>
+
+<script src="/assets/app.js"></script>
+<%- include('partials/footer.ejs') %>

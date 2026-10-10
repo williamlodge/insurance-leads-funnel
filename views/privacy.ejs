@@ -1,0 +1,32 @@
+<%- include('partials/header.ejs') %>
+<section class="card">
+  <h1>Privacy Policy</h1>
+  <p><em>Last updated: <%= today %></em></p>
+
+  <h2>What we collect</h2>
+  <ul>
+    <li><strong>Questionnaire answers</strong> (business stage, industry, size, state, timeline, insurance interests) — used to generate your checklist and understand our audience in aggregate.</li>
+    <li><strong>Lead form details</strong> (name, email, phone, business name, coverage interests) — collected only if you voluntarily submit the insurance quote request form, and only after you check the consent boxes.</li>
+    <li><strong>Technical data</strong> — IP address, browser user agent, and timestamps, stored with submissions for security, fraud prevention, and to document consent.</li>
+    <li><strong>Analytics</strong> — if enabled, Google Analytics 4 collects anonymized usage data (pages viewed, funnel steps). IP anonymization is enabled.</li>
+  </ul>
+
+  <h2>How we use it</h2>
+  <ul>
+    <li>To operate and improve this site and its checklist.</li>
+    <li>To connect you, at your explicit request, with licensed insurance professionals who can provide quotes.</li>
+    <li>To send administrative notifications to our team when forms are submitted.</li>
+  </ul>
+
+  <h2>Sharing</h2>
+  <p>We do not sell your personal information. Insurance lead details are shared only with licensed insurance providers/partners for the purpose of fulfilling your quote request. Questionnaire-only data is not shared with insurance partners.</p>
+
+  <h2>Your choices</h2>
+  <p>You may request access, correction, or deletion of your data by contacting us at <%= mailFrom %>. You may opt out of marketing communications at any time; opting out of texts can be done by replying STOP.</p>
+
+  <h2>Data security & retention</h2>
+  <p>Submissions are stored in an access-controlled database. We retain lead records as needed for compliance and business purposes, after which they are deleted or anonymized.</p>
+
+  <p class="fine-print">This policy is a general template and not legal advice. Have counsel review it for compliance with laws applicable to you (e.g., CCPA/CPRA, state privacy laws, TCPA) before production use.</p>
+</section>
+<%- include('partials/footer.ejs') %>

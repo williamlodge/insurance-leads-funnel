@@ -1,0 +1,30 @@
+# Optional: full MySQL stack for production use.
+# The standalone Dockerfile works without this (SQLite fallback).
+services:
+  web:
+    build: .
+    ports:
+      - "8080:3000"
+    environment:
+      DB_HOST: db
+      DB_NAME: launchwise
+      DB_USER: launchwise
+      DB_PASS: launchwise_secret
+      NOTIFY_EMAIL: you@example.com
+      MAIL_FROM: no-reply@yourdomain.com
+      BRAND_NAME: LaunchWise
+      GA4_ID: G-XXXXXXXXXX        # replace with your real GA4 Measurement ID
+      SMTP_URL: ""                # e.g. smtp://user:pass@smtp.host:587
+    depends_on:
+      - db
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: launchwise
+      MYSQL_USER: launchwise
+      MYSQL_PASSWORD: launchwise_secret
+      MYSQL_ROOT_PASSWORD: root_secret
+    volumes:
+      - db_data:/var/lib/mysql
+volumes:
+  db_data:

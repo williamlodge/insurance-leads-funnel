@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="<%= brand %> — plan your LLC and explore business insurance with a 4-step personalized startup checklist.">
+<title><%= pageTitle ? pageTitle + ' — ' + brand : brand + ' — LLC & Business Insurance Starter' %></title>
+
+<% if (ga4Id && ga4Id !== 'G-XXXXXXXXXX') { %>
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=<%= ga4Id %>"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '<%= ga4Id %>', { anonymize_ip: true });
+</script>
+<% } else { %>
+<script>
+// GA4 placeholder — set GA4_ID env var to enable tracking.
+window.gtag = window.gtag || function(){ (window.dataLayer = window.dataLayer || []).push(arguments); };
+</script>
+<% } %>
+
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="/"><%= brand %></a>
+    <nav class="site-nav">
+      <a href="/">Start</a>
+      <a href="/privacy">Privacy</a>
+      <a href="/disclaimer">Disclaimers</a>
+    </nav>
+  </div>
+</header>
+<main class="wrap">
